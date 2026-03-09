@@ -7,7 +7,7 @@ import {
   ChatResponse,
 } from "../types";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000/api";
 
 export async function recommend(profile: RecommendRequest): Promise<RecommendResponse> {
   const res = await fetch(`${API_BASE}/recommend`, {

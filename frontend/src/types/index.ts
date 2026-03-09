@@ -1,55 +1,66 @@
-// Request shapes
 export interface RecommendRequest {
   name: string;
   age?: number;
   educationLevel: "High School" | "Undergraduate" | "Graduate";
-  interestsPreference: string[];
+  interestsPreference: (
+    | "Creative Work"
+    | "Analytical Work"
+    | "People Interaction"
+    | "Exploration"
+  )[];
   workStyle: "Independent" | "Team-based" | "Hybrid";
-  favoriteSubjects: string[];
+  favoriteSubjects: ("Math" | "Science" | "Design" | "Business" | "Technology")[];
   goal: "AI Engineer" | "Data Analyst" | "UI/UX Designer" | "Product Manager" | "Not Sure";
   hobbies: string[];
 }
 
 export interface ChatRequest {
-  sessionId?: string;
   question: string;
+  careerId?: string;
 }
 
-// Response shapes
 export interface CareerMatch {
-  id: string; // canonical id e.g. ai-engineer
+  id: string;
   title: string;
-  matchScore: number; // 0-100
-  shortDescription: string;
-  whyMatchPreview: string;
+  matchScore: number;
+  description: string;
+  whyFit: string[];
 }
 
 export interface RecommendResponse {
-  matches: CareerMatch[];
+  topMatches: CareerMatch[];
 }
 
 export interface CareerDetailResponse {
   id: string;
   title: string;
+  description: string;
   overview: string;
   skillsNeeded: string[];
-  whyThisFits: string;
-  first30Days?: string[];
+  whyFit: string[];
+  roadmapEndpoint: string;
 }
 
 export interface RoadmapPhase {
+  phase: "Phase 1" | "Phase 2" | "Phase 3";
+  items: string[];
+}
+
+export interface Milestone {
   id: string;
-  title: string;
-  durationWeeks?: number;
-  milestones: { id: string; label: string; recommended?: boolean }[];
+  label: string;
+  status: "done" | "in-progress" | "locked";
 }
 
 export interface RoadmapResponse {
   id: string;
-  phases: RoadmapPhase[];
+  title: string;
+  roadmapPhases: RoadmapPhase[];
+  first30Days: string[];
+  milestones: Milestone[];
 }
 
 export interface ChatResponse {
-  reply: string;
-  source?: string;
+  answer: string;
+  tips: string[];
 }

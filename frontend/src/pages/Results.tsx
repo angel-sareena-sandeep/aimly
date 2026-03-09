@@ -41,7 +41,7 @@ export const Results: React.FC = () => {
   if (loading) return <div className="p-6">Analyzing your profile…</div>;
   if (!data) return <div className="p-6 text-gray-600">No recommendations available.</div>;
 
-  const top: CareerMatch[] = data.matches.slice(0, 3);
+  const top: CareerMatch[] = data.topMatches.slice(0, 3);
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -52,16 +52,7 @@ export const Results: React.FC = () => {
         {top.map((m) => (
           <CareerCard
             key={m.id}
-            match={{
-              id: m.id,
-              title: m.title,
-              matchScore: m.matchScore,
-              shortDescription: m.shortDescription ?? "",
-              whyMatchPreview: m.whyMatchPreview ?? "",
-              // frontend CareerCard expects whyFitTags and missingSkillsPreview; we keep them minimal
-              whyFitTags: m.whyMatchPreview ? [m.whyMatchPreview] : [],
-              missingSkillsPreview: [],
-            } as any}
+            match={m}
             onView={view}
             onSave={save}
           />

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { chat } from "../services/api";
 
 export const ChatbotPanel: React.FC<{ onClose?: () => void }> = ({ onClose }) => {
   const [messages, setMessages] = useState<{ from: "user" | "bot"; text: string }[]>([
@@ -6,10 +7,22 @@ export const ChatbotPanel: React.FC<{ onClose?: () => void }> = ({ onClose }) =>
   ]);
   const [input, setInput] = useState("");
 
-  function send() {
+  async function send() {
     if (!input.trim()) return;
     const userMsg = { from: "user" as const, text: input };
-    setMessages((m) => [...m, userMsg, { from: "bot", text: "Mock reply: Thanks — explore the roadmap above." }]);
+    setMessages((m) => [...m, userMsg]);
+
+    try {
+      const response = await chat({ question: input });
+      const tip = response.tips[0] ? ` Tip: ${response.tips[0]}` : "";
+      setMessages((m) => [...m, { from: "bot", text: `${response.answer}${tip}` }]);
+    } catch (_error) {
+      setMessages((m) => [
+        ...m,
+        { from: "bot", text: "I could not reach the mentor service right now. Try again in a moment." }
+      ]);
+    }
+
     setInput("");
   }
 

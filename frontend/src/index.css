@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body { @apply bg-gray-50 text-gray-800; }
+
+/* Container and small-screen padding */
+.container { max-width: 1200px; margin: 0 auto; padding-left: 1rem; padding-right: 1rem; }
+
+@media (max-width: 640px) {
+	/* reduce base font size slightly on very small screens */
+	html { font-size: 15px; }
+}
+
+/* Demo helper: ensure fixed chatbot doesn't overflow on small screens */
+.aimly-chat-wrapper { right: 0.75rem; left: auto; bottom: 0.75rem; }

@@ -53,10 +53,24 @@ export const MoodBoard: React.FC = () => {
 
   function submit() {
     if (!valid) return;
+
     // save hobbies and go to results where recommend call will be made
     const profileRaw = sessionStorage.getItem("aimly.profile");
     if (!profileRaw) return navigate("/");
     const profile = JSON.parse(profileRaw);
+
+    if (
+      !profile.name ||
+      !Array.isArray(profile.interestsPreference) ||
+      profile.interestsPreference.length === 0 ||
+      !Array.isArray(profile.favoriteSubjects) ||
+      profile.favoriteSubjects.length === 0
+    ) {
+      alert("Please complete your profile details before continuing.");
+      navigate("/");
+      return;
+    }
+
     sessionStorage.setItem("aimly.request", JSON.stringify({ ...profile, hobbies: selected }));
     navigate("/results");
   }

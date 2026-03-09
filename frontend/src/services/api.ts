@@ -15,7 +15,22 @@ export async function recommend(profile: RecommendRequest): Promise<RecommendRes
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(profile),
   });
-  if (!res.ok) throw new Error("Failed to fetch recommendations");
+
+  if (!res.ok) {
+    let message = "Failed to fetch recommendations";
+
+    try {
+      const body = await res.json();
+      if (body?.error && typeof body.error === "string") {
+        message = body.error;
+      }
+    } catch (_error) {
+      // Keep default message if response is not JSON.
+    }
+
+    throw new Error(message);
+  }
+
   return res.json();
 }
 

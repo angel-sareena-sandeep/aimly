@@ -13,6 +13,21 @@ export const UserProfile: React.FC = () => {
   const navigate = useNavigate();
 
   function next() {
+    if (!name.trim()) {
+      alert("Please enter your name.");
+      return;
+    }
+
+    if (interests.length === 0) {
+      alert("Please select at least one interest preference.");
+      return;
+    }
+
+    if (favoriteSubjects.length === 0) {
+      alert("Please select at least one favorite subject.");
+      return;
+    }
+
     const profile = { name, age, educationLevel: education, interestsPreference: interests, workStyle, favoriteSubjects, goal };
     sessionStorage.setItem("aimly.profile", JSON.stringify(profile));
     navigate("/moodboard");

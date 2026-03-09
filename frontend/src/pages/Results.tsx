@@ -22,7 +22,7 @@ export const Results: React.FC = () => {
       .then((r) => setData(r))
       .catch((e) => {
         console.error(e);
-        alert("Failed to fetch recommendations — check backend.");
+        alert(e instanceof Error ? e.message : "Failed to fetch recommendations — check backend.");
       })
       .finally(() => setLoading(false));
   }, [navigate]);
